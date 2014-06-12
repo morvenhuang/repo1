@@ -1,7 +1,7 @@
 package mh.bamgr.common;
 
+//an object used to return the result of server operation when doing ajax call
 public class AjaxResult {
-	//private int code;
 	private String status;
 	private String message;
 	public String getStatus() {
