@@ -1,0 +1,57 @@
+
+log4j
+
+mysql
+
+singleton?
+
+connection pool
+
+14.5.20
+Login redirect, filter
+
+relative path??
+
+
+
+14.5.21
+jstl
+  jstl-1.1.2.jar, standard-1.1.2.jar
+  
+  
+14.5.22
+datepicker, jquery  
+
+
+14.5.23
+datepicker change event
+
+
+14.5.28
+json
+
+
+
+14.6.5
+jquery, jdbc return generatedkey
+
+remove jstl
+
+
+
+14.6.9
+logout
+
+
+14.6.10
+Redirect after AJAX request / Control authentication failure after AJAX request
+
+
+14.6.11
+auto redirect with delay
+user permission
+remove record
+
+
+
+
