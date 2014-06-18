@@ -227,8 +227,8 @@ public class DatabaseManipulator {
 			stmt.setInt(1, u.getId());
 			stmt.setDate(2, fr);
 			stmt.setDate(3, to);
-			stmt.setInt(4, (pageNum - 1) * 3);
-			stmt.setInt(5, 3);
+			stmt.setInt(4, (pageNum - 1) * ConfigUtil.getNumPerPage());
+			stmt.setInt(5, ConfigUtil.getNumPerPage());
 			rs = stmt.executeQuery();
 			if (rs.next()) {
 				do {

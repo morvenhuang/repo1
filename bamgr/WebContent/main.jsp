@@ -70,6 +70,9 @@
 			}
 		});
 		
+		
+		
+		
 		var frDate;
 		var toDate;
 		var cnt;
@@ -84,11 +87,11 @@
 					to:toDate
 				},
 				success:function(data){
-					cnt=data;
+					cnt=data.total;
 					//alert(data);
-					$('#red').smartpaginator({
+					$('#pg').smartpaginator({
 						totalrecords: cnt,
-						recordsperpage: 3,
+						recordsperpage: data.perPage,
 						theme: 'black',
 						onchange: function (page) {
 							retrieve(page);
@@ -135,10 +138,9 @@
 			frDate=$('#dpFrom').val();
 			toDate=$('#dpTo').val();
 			retrieveCount();
-			retrieve('1');//have to nest the function in another function, can not directly use a function which has arg
-			
-			
+			retrieve('1');//have to nest the function in another function, can not directly use a function which has arg			
 		});
+		
 		
 		
 		
@@ -157,6 +159,28 @@
 			cr.prop('hidden', false);
 			cr.appendTo('#tableAdd');
 		});
+		
+		
+		
+		
+
+		var specialKeys = new Array();
+		specialKeys.push(8); //Backspace
+		// Have to use $(document) here, cannot use $(.txtAmountClass) since it's dynamically created and doesn't exist in the beginning.
+		$(document).on('keypress', '.txtAmountClass', function (e) {
+			var keyCode = e.which ? e.which : e.keyCode;
+			var ret = ((keyCode >= 48 && keyCode <= 57) || specialKeys.indexOf(keyCode) != -1);
+			return ret;
+		});
+		$(document).on('paste', '.txtAmountClass', function (e) {
+			return false;
+		});
+		$(document).on('drop', '.txtAmountClass', function (e) {
+			return false;
+		});
+		
+		
+		
 		
 		$(document).on('click','.btnSaveClass', function(){
 			var tr = $(this).closest('tr');
@@ -298,9 +322,6 @@
 							<td>Date: <input type="text" class="dpClass" readonly="readonly" />(*)</td>
 							<td>Category: <select class="selClass">
 									<option value="select one">(Select One)</option>
-									<!--<c:forEach items="${expensecategories}" var="category">
-										<option value="${category.getId()}">${category.getName()}</option>
-									</c:forEach>-->
 							</select>(*)</td>
 							<td>Amount: <input type="text" name="amount" class="txtAmountClass">(*)</td>
 							<td>Description: <input type="text" name="description" class="txtDescClass"></td>
@@ -312,9 +333,6 @@
 							<td>Date: <input type="text" class="dpClass" readonly="readonly" />(*)</td>
 							<td>Category: <select class="selClass">
 									<option value="select one">(Select One)</option>
-									<!--<c:forEach items="${incomecategories}" var="category">
-										<option value="${category.getId()}">${category.getName()}</option>
-									</c:forEach>-->
 							</select>(*)</td>
 							<td>Amount: <input type="text" name="amount" class="txtAmountClass">(*)</td>
 							<td>Description: <input type="text" name="description" class="txtDescClass"></td>
@@ -360,7 +378,7 @@
 										</tr>
 										<!-- paging -->
 										<tr>
-										<td width="100%"><div id="red"  style="width:100%"></td>
+										<td><div id="pg"  style="width:99%"></td>
 										</tr>
 										</table>
 										</td>

@@ -19,9 +19,11 @@ import com.google.gson.reflect.TypeToken;
 
 import mh.bamgr.common.AjaxResult;
 import mh.bamgr.common.MonthlySumObject;
+import mh.bamgr.common.PagingObject;
 import mh.bamgr.models.CategoryBean;
 import mh.bamgr.models.ExpenseIncomeBean;
 import mh.bamgr.models.UserBean;
+import mh.bamgr.utils.ConfigUtil;
 import mh.bamgr.utils.DatabaseManipulator;
 
 /**
@@ -127,10 +129,16 @@ public class ActionServlet extends HttpServlet {
 			try {		 
 				Date dtfr = formatter.parse(fr);
 				Date dtto = formatter.parse(to);
-				response.setContentType("text/plain");
+				response.setContentType("application/json");
 				response.setCharacterEncoding("UTF-8");
-				int data = DatabaseManipulator.getExpenseIncomeCount(new java.sql.Date(dtfr.getTime()), new java.sql.Date(dtto.getTime()), user);
-				response.getWriter().write(Integer.toString(data)); 
+				int cnt = DatabaseManipulator.getExpenseIncomeCount(new java.sql.Date(dtfr.getTime()), new java.sql.Date(dtto.getTime()), user);
+				PagingObject po = new PagingObject();
+				po.setTotal(cnt);
+				po.setPerPage(ConfigUtil.getNumPerPage());
+				
+				Gson gson = new GsonBuilder().setDateFormat("MM/dd/yyyy").create();
+				String data = gson.toJson(po, PagingObject.class);
+				response.getWriter().write(data); 
 		 
 			} catch (ParseException e) {
 				e.printStackTrace();
