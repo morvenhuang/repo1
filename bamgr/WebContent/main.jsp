@@ -71,6 +71,11 @@
 		});
 		
 		
+		$('#btnManageCategories').on('click', function(){
+			window.location='category.jsp';
+		});
+		
+		
 		
 		
 		var frDate;
@@ -113,7 +118,7 @@
 				},
 				//dataType:'json',
 				success:function(data){
-					$("#tableRetrieve").find("tr").remove();//remove the tr which has row index greater than 2 (based on 0).
+					$("#tableRetrieve").find("tr").remove();
 					$.each(data, function (index, value) {
 						var cr;
 						if (value.isIncome == 1) {
@@ -302,7 +307,7 @@
 				<td>
 				<table width="100%" border="1" cellpadding="0" cellspacing="0" style="border-collapse:collapse;"><tr>
 					<td>Welcome, ${user.getName() }</td>
-					<td width="100px"><input type="button" id="btnAddCategory" value="Add Category"></td>
+					<td width="100px"><input type="button" id="btnManageCategories" value="Manage Categories"></td>
 					<td width="60px"><input type="button" id="btnLogout" value="Logout"></td>
 				</tr></table>
 				</td>
