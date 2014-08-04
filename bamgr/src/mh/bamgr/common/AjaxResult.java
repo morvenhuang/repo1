@@ -4,6 +4,13 @@ package mh.bamgr.common;
 public class AjaxResult {
 	private String status;
 	private String message;
+	private String extra = "";
+	public String getExtra() {
+		return extra;
+	}
+	public void setExtra(String extra) {
+		this.extra = extra;
+	}
 	public String getStatus() {
 		return status;
 	}

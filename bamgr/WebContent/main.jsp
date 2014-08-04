@@ -206,6 +206,9 @@
 					dataType:'json',
 					success:function(data){
 						if (data.status == 'success') {
+							if(id=='-1' && data.extra){
+								tr.find('.hdEiIdClass').val(data.extra);
+							}
 							alert('Congrats, your data is saved.');
 						} else if (data.status == 'error') {
 							alert(data.message);

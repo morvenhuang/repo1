@@ -214,6 +214,40 @@ public class DatabaseManipulator {
 			closeResources(rs, stmt, conn);
 		}
 	}
+	
+	public static boolean upsertCategory(CategoryBean s) {
+		Connection conn = null;
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+		try {
+			conn = ConnectionFromPool.getConnection();
+			if (s.getId() == -1) {
+				stmt = conn.prepareStatement("INSERT INTO categories(name, description, is_income) values(?,?,?)", Statement.RETURN_GENERATED_KEYS);
+				stmt.setString(1, s.getName());
+				stmt.setString(2, s.getDescription());
+				stmt.setInt(3, s.getIsIncome());
+				stmt.execute();
+
+				rs = stmt.getGeneratedKeys();
+				if (rs.next()) {
+					s.setId(rs.getInt(1));
+				}
+			} else {
+				stmt = conn.prepareStatement("update categories set name=?,description=?, is_income=? where id=?");
+				stmt.setString(1, s.getName());
+				stmt.setString(2, s.getDescription());
+				stmt.setInt(3, s.getIsIncome());
+				stmt.setInt(4, s.getId());
+				stmt.execute();
+			}
+			return true;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		} finally {
+			closeResources(rs, stmt, conn);
+		}
+	}
 
 	public static List<ExpenseIncomeBean> getExpenseIncome(Date fr, Date to, int pageNum, UserBean u) {
 		Connection conn = null;
@@ -261,6 +295,24 @@ public class DatabaseManipulator {
 		try {
 			conn = ConnectionFromPool.getConnection();
 			stmt = conn.prepareStatement("DELETE FROM expense_income WHERE id=?");
+			stmt.setInt(1, id);
+			stmt.execute();
+			return true;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		} finally {
+			closeResources(rs, stmt, conn);
+		}
+	}
+	
+	public static boolean removeCategory(int id) {
+		Connection conn = null;
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+		try {
+			conn = ConnectionFromPool.getConnection();
+			stmt = conn.prepareStatement("DELETE FROM categories WHERE id=?");
 			stmt.setInt(1, id);
 			stmt.execute();
 			return true;

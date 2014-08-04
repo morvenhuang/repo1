@@ -61,6 +61,7 @@ public class ActionServlet extends HttpServlet {
 				ar = new AjaxResult();
 				ar.setStatus("success");
 				ar.setMessage("");
+				ar.setExtra(Integer.toString(data.getId()));
 			} else {
 				ar = new AjaxResult();
 				ar.setStatus("error");
